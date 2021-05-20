@@ -1,8 +1,9 @@
 apiVersion: tekton.dev/v1beta1
 kind: PipelineRun
-metadata:
-  creationTimestamp: null
+metadata:  
+  creationTimestamp: 'null'
   name: featurebuild
 spec:
+  serviceAccountName: build-bot
   pipelineRef:
     name: lint-build-push
