@@ -1,0 +1,11 @@
+apiVersion: tekton.dev/v1alpha1
+kind: PipelineResource
+metadata:
+  name: robs-tekton-example
+spec:
+  type: git
+  params:
+    - name: url
+      value: https://gitlab.com/rpassmore/jenkins-example
+    - name: revision
+      value: master

@@ -1,0 +1,36 @@
+apiVersion: tekton.dev/v1beta1
+kind: Task
+metadata:
+  name: lint
+spec:
+  resources:
+    inputs:
+      - name: repo
+        type: git
+  steps:
+    - name: hadolint
+      image: hadolint/hadolint:latest-debian
+      workingDir: /workspace/repo/src
+      command: ["hadolint -f json Dockerfile | tee -a hadolint_lint.json"]
+      args: ["test"]
+---
+apiVersion: tekton.dev/v1beta1
+kind: Task
+metadata:
+  name: build-and-push
+spec:
+  resources:
+    inputs:
+      - name: repo
+        type: git
+  steps:
+    - name: build-and-push
+      image: gcr.io/kaniko-project/executor:debug
+      env:
+        - name: registry-credentials
+          value: /tekton/home/.docker
+      command:
+        - /kaniko/executor
+        - --dockerfile=Dockerfile
+        - --context=/workspace/repo/src
+        - --destination=rpassmore/jenkins-test:0.0.1-tekton

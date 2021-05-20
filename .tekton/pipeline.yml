@@ -1,0 +1,28 @@
+apiVersion: tekton.dev/v1beta1
+kind: Pipeline
+metadata:
+  name: lint-build-push
+spec:
+  resources:
+    - name: repo
+      type: git
+  tasks:
+    # Run application tests
+    - name: lint
+      taskRef:
+        name: hadolint
+      resources:
+        inputs:
+          - name: repo      # name of the Task input (see Task definition)
+            resource: repo  # name of the Pipeline resource
+
+    # Build docker image and push to registry
+    - name: build-and-push
+      taskRef:
+        name: build-and-push
+      runAfter:
+        - lint
+      resources:
+        inputs:
+          - name: repo      # name of the Task input (see Task definition)
+            resource: repo  # name of the Pipeline resource
