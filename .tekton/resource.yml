@@ -6,6 +6,6 @@ spec:
   type: git
   params:
     - name: url
-      value: https://gitlab.com/rpassmore/jenkins-example
+      value: https://github.com/rpassmore/tekton-example
     - name: revision
       value: master
