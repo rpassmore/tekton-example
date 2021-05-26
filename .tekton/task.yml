@@ -10,9 +10,11 @@ spec:
   steps:
     - name: hadolint
       image: hadolint/hadolint:latest-debian
-      workingDir: /workspace/repo/src
-      command: ["hadolint -f json Dockerfile | tee -a hadolint_lint.json"]
-      args: ["test"]
+      workingDir: /workspace/repo
+      command:         
+        - hadolint                 
+      args:               
+        - Dockerfile
 ---
 apiVersion: tekton.dev/v1beta1
 kind: Task
@@ -26,11 +28,14 @@ spec:
   steps:
     - name: build-and-push
       image: gcr.io/kaniko-project/executor:debug
+      workingDir: /workspace/repo
       env:
         - name: registry-credentials
           value: /tekton/home/.docker
       command:
         - /kaniko/executor
+      args:
         - --dockerfile=Dockerfile
         - --context=/workspace/repo/src
         - --destination=rpassmore/jenkins-test:0.0.1-tekton
+        - --no-push

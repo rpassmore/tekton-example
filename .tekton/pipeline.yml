@@ -6,11 +6,10 @@ spec:
   resources:
     - name: repo
       type: git
-  tasks:
-    # Run application tests
+  tasks:    
     - name: lint
       taskRef:
-        name: hadolint
+        name: lint
       resources:
         inputs:
           - name: repo      # name of the Task input (see Task definition)

@@ -6,3 +6,7 @@ spec:
   serviceAccountName: build-bot
   pipelineRef:
     name: lint-build-push
+  resources:
+    - name: repo
+      resourceRef: 
+        name: robs-tekton-example
