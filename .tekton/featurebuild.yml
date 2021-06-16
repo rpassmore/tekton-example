@@ -5,7 +5,7 @@ metadata:
   generateName: example-pipelinerun-
   namespace: tekton-pipelines
 spec:
-  serviceAccountName: build-bot
+  #serviceAccountName: build-bot
   pipelineRef:
     name: lint-build-push
   resources:
