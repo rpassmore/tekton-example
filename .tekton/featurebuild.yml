@@ -1,7 +1,9 @@
 apiVersion: tekton.dev/v1beta1
 kind: PipelineRun
 metadata:    
-  name: featurebuild
+  #name: featurebuild
+  generateName: example-pipeline-
+  namespace: tekton-pipelines
 spec:
   serviceAccountName: build-bot
   pipelineRef:
