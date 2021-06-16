@@ -1,7 +1,7 @@
 apiVersion: tekton.dev/v1beta1
 kind: PipelineRun
 metadata:    
-  #name: featurebuild
+  name: example-pipeline-
   generateName: example-pipeline-
   namespace: tekton-pipelines
 spec:
