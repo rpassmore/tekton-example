@@ -1,25 +1,30 @@
 # jenkins-example using tekton pipelines
 
-```yaml
-apiVersion: v1
-kind: ServiceAccount
-metadata:
-  name: build-bot
-secrets:
-  - name: basic-user-pass
+```console
+kubectl apply --filename https://storage.googleapis.com/tekton-releases/dashboard/latest/tekton-dashboard-release.yaml -n tekton-pipelines
 ```
 
-```yaml
-apiVersion: v1
-kind: Secret
+```console
+# replace DASHBOARD_URL with the hostname you want for your dashboard
+# the hostname should be setup to point to your ingress controller
+kubectl apply -n tekton-pipelines -f - <<EOF
+apiVersion: networking.k8s.io/v1
+kind: Ingress
 metadata:
-  name: basic-user-pass
-  annotations:
-    tekton.dev/docker-0: https://index.docker.io/v1/
-type: kubernetes.io/basic-auth
-stringData:
-    username: myusername
-    password: mypassword
+  name: tekton-dashboard
+  namespace: tekton-pipelines
+spec:
+  rules:
+  - host: tekton.localhost
+    http:
+      paths:
+      - pathType: ImplementationSpecific
+        backend:
+          service:
+            name: tekton-dashboard
+            port:
+              number: 9097
+EOF
 ```
 
 ```console
@@ -28,4 +33,8 @@ secret/basic-user-pass created
 
 $ kubectl apply -f serviceaccount.yaml
 serviceaccount/build-bot created
+role.rbac.authorization.k8s.io/pipeline-role created
+rolebinding.rbac.authorization.k8s.io/pipline-role-binding created
+role.rbac.authorization.k8s.io/tekton-role created
+rolebinding.rbac.authorization.k8s.io/tekton-role-binding created
 ```

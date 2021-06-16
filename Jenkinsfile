@@ -4,7 +4,7 @@ pipeline {
       stage('Stage') {
         steps {
             checkout scm            
-            tektonCreateRaw(inputType: 'FILE', input: '.tekton/pipeline.yml')
+            tektonCreateRaw(inputType: 'FILE', input: '.tekton/featurebuild.yml')
         }
       }
   }
