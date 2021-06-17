@@ -1,11 +1,9 @@
 apiVersion: tekton.dev/v1beta1
 kind: PipelineRun
-metadata:    
-  #name: example-pipeline
+metadata:      
   generateName: example-pipelinerun-
   namespace: tekton-pipelines
 spec:
-  #serviceAccountName: build-bot
   pipelineRef:
     name: lint-build-push
   resources:
