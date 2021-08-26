@@ -1,4 +1,4 @@
-FROM alpine:3.13
+FROM alpine:3.14.0
 
 RUN apk --update add \
   bash=5.1.0-r0
